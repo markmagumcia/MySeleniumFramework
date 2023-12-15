@@ -1,4 +1,4 @@
-package com.myseleniumframework;
+package com.TestCases;
 
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
