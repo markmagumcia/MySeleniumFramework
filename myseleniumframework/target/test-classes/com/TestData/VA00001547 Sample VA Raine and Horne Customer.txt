@@ -1,0 +1,159 @@
+{
+    "creditArrangementId": "VA00001547",
+    "introducerId": "47c1da1f-0c70-49ad-b331-2c6d06983949",
+    "guarantors": [
+        {
+            "encodedKey": "ff03e8b9-d585-4b32-8dc7-349c4e33cfff",
+            "type": "Organisation",
+            "organisation": {
+                "riskStatus": "",
+                "riskReviewRequired": false,
+                "score": 663,
+                "encodedKey": "ff03e8b9-d585-4b32-8dc7-349c4e33cfff",
+                "abn": "42600819010",
+                "entityName": "ALLEN BROTHERS HOLDINGS PTY LTD",
+                "address": {
+                    "encodedKey": "c8cf2f57-53ac-4f0a-a718-5661a4c7a938",
+                    "flatNumber": "",
+                    "streetNumber": "49",
+                    "streetName": "BEAMS",
+                    "streetType": "RD",
+                    "suburb": "BOONDALL",
+                    "postCode": "4034",
+                    "state": "QLD",
+                    "completeAddress": "49 BEAMS RD, BOONDALL QLD 4034"
+                },
+                "acn": "600819010"
+            }
+        }
+    ],
+    "coSupports": [],
+    "beneficialOwners": [],
+    "brokerDetails": "Finrent - Partner Program",
+    "program": {
+        "id": "3329",
+        "name": "FINRENT PTY LTD"
+    },
+    "salesperson": {
+        "encodedKey": "58fc837d-ce6a-4b4a-9789-4d33f96bb397",
+        "firstName": "Broker",
+        "lastName": "Finrent",
+        "emailAddress": "brokertest.pilot+uat1@gmail.com"
+    },
+    "communicationDetails": {
+        "firstName": "Broker",
+        "lastName": "Finrent",
+        "emailAddress": "brokertest.pilot+uat1@gmail.com"
+    },
+    "whiteLabelAssocation": "Default",
+    "companyRiskStatus": "",
+    "companyRiskReviewRequired": false,
+    "entitiesWithHighRisk": [],
+    "entitiesForRiskAssessment": [],
+    "acn": "003625634",
+    "companyScore": 605,
+    "gstRegistrationStatus": "Registered",
+    "gstRegistrationDate": "2000-07-01T00:00:00Z",
+    "incorporationDate": "2000-03-28T00:00:00",
+    "hasAbnContinuation": false,
+    "hasGstContinuation": false,
+    "isABNContinuationEditable": false,
+    "isGSTContinuationEditable": false,
+    "additionalInformation": {},
+    "partners": [],
+    "productPricingDate": "2023-07-27T01:07:19.777Z",
+    "productCategory": "Rental",
+    "product": "Tertiary",
+    "loanPurpose": "New Finance",
+    "isPrivateSale": false,
+    "baseAmount": 3000.0,
+    "totalAssetValue": 3000.0,
+    "totalAssetValueGST": 272.73,
+    "totalAssetValueExclGST": 2727.27,
+    "financeAmount": 3272.72,
+    "brokerage": "5%",
+    "brokerageAmount": 150.00,
+    "dateSubmitted": "2023-07-27T01:07:19.7779237Z",
+    "abn": "76003625634",
+    "entityName": "RAINE & HORNE PTY. LIMITED",
+    "legalName": "RAINE & HORNE PTY. LIMITED",
+    "tradingName": "RAINE & HORNE PTY. LIMITED",
+    "tradingAddress": {
+        "encodedKey": "2044cf66-74d7-493d-b826-35dfcb2f574e",
+        "flatNumber": "",
+        "streetNumber": "447",
+        "streetName": "KENT",
+        "streetType": "ST",
+        "suburb": "SYDNEY",
+        "postCode": "2000",
+        "state": "NSW",
+        "completeAddress": "447 KENT ST, SYDNEY NSW 2000"
+    },
+    "hasDefaults": false,
+    "repaymentTerm": 12,
+    "repaymentTermUnit": "Months",
+    "establishmentFee": {
+        "amount": {
+            "currency": "AUD",
+            "amount": 450.0
+        },
+        "gstInclusive": true,
+        "isFinanced": true
+    },
+    "accountKeepingFee": {
+        "amount": {
+            "currency": "AUD",
+            "amount": 0.0
+        },
+        "gstInclusive": true,
+        "isFinanced": false
+    },
+    "repaymentFrequency": "Monthly",
+    "repaymentTiming": "InAdvance",
+    "repaymentAmount": 288.68,
+    "isOldProduct": false,
+    "entityType": "Private Company",
+    "anzsicCode": "B07",
+    "loanInterestRate": 9.0,
+    "isPricingOverridden": false,
+    "warehouseType": "A",
+    "assessmentType": "FullDocFinancials",
+    "assetDetails": {
+        "type": "Burglar Alarm",
+        "yearOfManufacture": 2019,
+        "ageAtEndOfTerm": 5,
+        "ageAtInception": 4,
+        "make": "TestMake",
+        "model": "TestModel",
+        "description": "TestDescription",
+        "condition": "New",
+        "supplierName": "TESTCO AUSTRALIA PTY LTD",
+        "supplierABN": "35086884675"
+    },
+    "channel": "Vendor",
+    "residualValueType": "Percentage",
+    "residualValuePercentage": 10.0,
+    "residualValueAmount": 272.73,
+    "maintenanceFee": {
+        "amount": {
+            "currency": "AUD",
+            "amount": 0.0
+        },
+        "gstInclusive": true,
+        "isFinanced": false
+    },
+    "ppsrFee": {
+        "amount": {
+            "currency": "AUD",
+            "amount": 0.0
+        },
+        "gstInclusive": false,
+        "isFinanced": true
+    },
+    "contactDetails": {
+        "name": "Test",
+        "emailAddress": "tester123@test123.com",
+        "mobileNumber": "+61122222222",
+        "role": "Tester"
+    }
+}

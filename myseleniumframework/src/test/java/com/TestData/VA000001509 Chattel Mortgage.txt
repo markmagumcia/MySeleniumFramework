@@ -1,0 +1,130 @@
+{
+    "creditArrangementId": "VA00001509",
+    "introducerId": "b5479596-315f-4242-986e-c16abfd6a030",
+    "guarantors": [],
+    "coSupports": [],
+    "beneficialOwners": [],
+    "brokerDetails": "TPC FINANCE",
+    "program": {
+        "id": "8550",
+        "name": "TPC FINANCE PTY LTD"
+    },
+    "salesperson": {
+        "encodedKey": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "firstName": "Consultant",
+        "lastName": "Tpc",
+        "emailAddress": "brokertest.pilot+uat5@gmail.com"
+    },
+    "communicationDetails": {
+        "firstName": "Consultant",
+        "lastName": "Tpc",
+        "emailAddress": "brokertest.pilot+uat5@gmail.com"
+    },
+    "whiteLabelAssocation": "Default",
+    "entitiesWithHighRisk": [],
+    "entitiesForRiskAssessment": [],
+    "acn": "600819136",
+    "companyScore": -991,
+    "gstRegistrationStatus": "NotRegistered",
+    "incorporationDate": "2019-06-06T00:00:00",
+    "hasAbnContinuation": false,
+    "hasGstContinuation": false,
+    "isABNContinuationEditable": false,
+    "isGSTContinuationEditable": false,
+    "additionalInformation": {
+        "applicationNotes": "notes"
+    },
+    "partners": [],
+    "productPricingDate": "2023-07-20T07:07:46.863Z",
+    "productCategory": "Chattel Mortgage",
+    "product": "Secondary",
+    "loanPurpose": "New Finance",
+    "isPrivateSale": false,
+    "baseAmount": 150000.00,
+    "totalAssetValue": 150000.00,
+    "totalAssetValueGST": 13636.36,
+    "totalAssetValueExclGST": 136363.64,
+    "financeAmount": 158187.50,
+    "brokerage": "5%",
+    "brokerageAmount": 8250.00,
+    "dateSubmitted": "2023-07-20T07:07:46.8636469Z",
+    "abn": "57600819136",
+    "entityName": "DARK LAVENDER PENINSULA ELECTRIC INDIGO POISON IVY PTY LTD",
+    "legalName": "DARK LAVENDER PENINSULA ELECTRIC INDIGO POISON IVY PTY LTD",
+    "tradingName": "DARK LAVENDER PENINSULA ELECTRIC INDIGO POISON IVY PTY LTD",
+    "tradingAddress": {
+        "encodedKey": "64181fee-ad10-48cf-9069-398f97252d0d",
+        "flatNumber": "",
+        "streetNumber": "33",
+        "streetName": "CROSS",
+        "streetType": "ST",
+        "suburb": "DOONSIDE",
+        "postCode": "2767",
+        "state": "NSW",
+        "completeAddress": "33 CROSS ST, DOONSIDE NSW 2767"
+    },
+    "contributionAmount": 0.0,
+    "hasDefaults": false,
+    "repaymentTerm": 36,
+    "repaymentTermUnit": "Months",
+    "establishmentFee": {
+        "amount": {
+            "currency": "AUD",
+            "amount": 500.0
+        },
+        "gstInclusive": true,
+        "isFinanced": true
+    },
+    "accountKeepingFee": {
+        "amount": {
+            "currency": "AUD",
+            "amount": 0.0
+        },
+        "gstInclusive": true,
+        "isFinanced": false
+    },
+    "repaymentFrequency": "Monthly",
+    "repaymentTiming": "InAdvance",
+    "repaymentAmount": 4294.56,
+    "isOldProduct": false,
+    "entityType": "Private Company",
+    "balloonRepaymentType": "Percentage",
+    "balloonRepaymentPercentage": 30.0,
+    "balloonRepaymentAmount": 45000.0,
+    "anzsicCode": "E32",
+    "loanInterestRate": 13.45,
+    "isPricingOverridden": false,
+    "warehouseType": "A",
+    "assessmentType": "LowDoc",
+    "assetDetails": {
+        "type": "Crushing Plant",
+        "make": "",
+        "model": "",
+        "description": "",
+        "condition": "New",
+        "supplierName": ""
+    },
+    "channel": "Vendor",
+    "maintenanceFee": {
+        "amount": {
+            "currency": "AUD",
+            "amount": 0.0
+        },
+        "gstInclusive": true,
+        "isFinanced": false
+    },
+    "ppsrFee": {
+        "amount": {
+            "currency": "AUD",
+            "amount": 0.0
+        },
+        "gstInclusive": false,
+        "isFinanced": true
+    },
+    "contactDetails": {
+        "name": "Test",
+        "emailAddress": "2@gmail.com",
+        "mobileNumber": "+61610329029",
+        "role": "tester"
+    }
+}
