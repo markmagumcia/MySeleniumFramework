@@ -6,7 +6,7 @@ import com.setup.BaseSelenium;
 public class PageObjectConnectors{
 
     protected static BaseSelenium selenium = new BaseSelenium();
-    protected static sauceDemoPOM sauceDemo = new sauceDemoPOM();
+    protected static sauceDemoPOM sauceDemo = new sauceDemoPOM(selenium);
     
     
 }

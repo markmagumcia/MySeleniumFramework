@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class BaseSelenium {
     public static Logger log = LogManager.getLogger();
-	private static String URL = "https://jupiter.cloud.planittesting.com/";
+	//private static String URL = "https://jupiter.cloud.planittesting.com/";
 	static WebDriver driver;
 	static WebDriverWait wait;
 
@@ -30,7 +30,7 @@ public class BaseSelenium {
 
 	}
 
-    public static void launchBrowser() {
+    public static void launchBrowser(String URL) {
 		driver = new ChromeDriver();
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		log.info("Launching: {}", URL);
@@ -39,7 +39,7 @@ public class BaseSelenium {
 		driver.get(URL);
 
 	}
-    	public static void closeBrowser() {
+    	public static void closeBrowser(String URL) {
 		log.info("Closing: {} ", URL);
 		driver.quit();
 	}
