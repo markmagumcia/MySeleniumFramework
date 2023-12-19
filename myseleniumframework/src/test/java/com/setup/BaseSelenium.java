@@ -1,4 +1,4 @@
-package com.Utilities;
+package com.setup;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,6 +25,10 @@ public class BaseSelenium {
 	private static String URL = "https://jupiter.cloud.planittesting.com/";
 	static WebDriver driver;
 	static WebDriverWait wait;
+
+	public BaseSelenium(){
+
+	}
 
     public static void launchBrowser() {
 		driver = new ChromeDriver();
@@ -58,6 +62,11 @@ public class BaseSelenium {
 	public String getText(String xpath) {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 		return driver.findElement(By.xpath(xpath)).getText();
+	}
+
+	public void clickElement(String xpath) {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+		driver.findElement(By.xpath(xpath)).click();
 	}
 
 
