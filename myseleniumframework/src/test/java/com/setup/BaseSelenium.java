@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ListIterator;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,6 +45,29 @@ public class BaseSelenium {
 		driver.quit();
 	}
 
+	public boolean isElementDisplayed(String xpath){
+		try{
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+			log.info("Element {} is displayed", xpath);
+			return driver.findElement(By.xpath(xpath)).isDisplayed();
+		} catch (Exception e) {
+			return false;
+		}
+
+	}
+
+	public void findElements(String xpath){
+		System.out.println(driver.findElements(By.xpath(xpath)));
+		System.out.println(driver.findElements(By.xpath(xpath)));
+
+		ListIterator<WebElement> iterator = driver.findElements(By.xpath(xpath)).listIterator();
+		System.out.println("Using ListIterator:\n");
+		while(iterator.hasNext()){
+			System.out.println("Value is: " + iterator.next());
+		}
+		
+	}
+
 	public void verifyElementIsDisplayed(String xpath) {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 		assertTrue(driver.findElement(By.xpath(xpath)).isDisplayed());
@@ -52,6 +76,8 @@ public class BaseSelenium {
 	public void verifyElementIsNotDisplayed(String xpath) {
 		assertTrue(driver.findElements(By.xpath(xpath)).size() == 0);
 	}
+
+
 
 	public void enterText(String xpath, String text) {
 		WebElement element = driver.findElement(By.xpath(xpath));

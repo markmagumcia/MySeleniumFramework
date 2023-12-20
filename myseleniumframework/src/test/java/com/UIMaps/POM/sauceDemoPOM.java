@@ -19,4 +19,13 @@ public class sauceDemoPOM {
         selenium.enterText(sauceDemoXpaths.PASSWORD, password);
         selenium.clickElement(sauceDemoXpaths.LOGIN_BUTTON);
     }
+
+    public boolean isDashboardDisplayed(){
+        return selenium.isElementDisplayed(sauceDemoXpaths.DASHBOARD);
+   }
+
+    public void getelements(){
+        selenium.findElements(sauceDemoXpaths.INVENTORY_ITEMS);
+
+    }
 }
