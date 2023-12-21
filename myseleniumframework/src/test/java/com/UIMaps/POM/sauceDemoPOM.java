@@ -34,23 +34,34 @@ public class sauceDemoPOM {
    }
 
     public void makeInventoryJSON(){
-        String itemName,itemDesc,itemPrice;
+        String elementID,itemName,itemDesc,itemPrice;
+        String[] split;
         JsonHelper json = new JsonHelper();
         ObjectNode resultJSON = json.createParentJSON();
-        WebElement element,elemento;
-        int dashboardItemsCount;
-        dashboardItemsCount= selenium.findElements(sauceDemoXpaths.INVENTORY_ITEMS).size();
-
-        List<WebElement> listOfElements = selenium.findElements("//div[@class='inventory_item']");
+    
+      
+      
+        
+        List<WebElement> listOfElements = selenium.findElements("//div[@class='inventory_item']/div/a");
         for (WebElement e: listOfElements){
-            System.out.println(e.getText());
+            WebElement itemDescElement;
+            elementID=e.getAttribute("id");
+            split = elementID.split("_");
+            
+            //a[contains(@id,'item_4_')]/parent::div[@class='inventory_item_label']
+            String itemDescXpath = "//a[contains(@id,'item_"+ split[1] + "_')]/parent::div[@class='inventory_item_label']";
+            itemDescElement = selenium.findElement(By.xpath(itemDescXpath));
+            itemName = itemDescElement.findElement(By.xpath("//div[@class='inventory_item_name ']")).getText();
+            itemDesc = itemDescElement.findElement(By.xpath("//div[@class='inventory_item_desc']")).getText();
+            System.out.println(itemName);
+            System.out.println(itemDesc);
         }
         
         // for (int i = 1; i<=dashboardItemsCount; i++){
         //     ObjectNode childNode=json.createChildJSON();
         //     String xpath = "//div[@class='inventory_item']";
         //     element = selenium.findElements(xpath).get(i);
-        //     elemento = element.findElement(By.xpath("//a"));
+        //     elemento = element.findElement(By.xpath("/*//a"));
         //     System.out.println(elemento.getAttribute("id"));
         //     itemName = element.findElement(By.xpath("//div[@class='inventory_item_name ']")).getText();
         //     itemDesc = element.findElement(By.xpath("//div[@class='inventory_item_desc']")).getText();
