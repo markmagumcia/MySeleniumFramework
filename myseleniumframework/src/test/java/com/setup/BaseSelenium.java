@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 import java.util.ListIterator;
 
 import org.apache.logging.log4j.LogManager;
@@ -56,16 +57,12 @@ public class BaseSelenium {
 
 	}
 
-	public void findElements(String xpath){
-		System.out.println(driver.findElements(By.xpath(xpath)));
-		System.out.println(driver.findElements(By.xpath(xpath)));
+	public WebElement findElement(By by){
+		return driver.findElement(by);
+	}
 
-		ListIterator<WebElement> iterator = driver.findElements(By.xpath(xpath)).listIterator();
-		System.out.println("Using ListIterator:\n");
-		while(iterator.hasNext()){
-			System.out.println("Value is: " + iterator.next());
-		}
-		
+	public List<WebElement> findElements(String xpath){
+		return driver.findElements(By.xpath(xpath));
 	}
 
 	public void verifyElementIsDisplayed(String xpath) {

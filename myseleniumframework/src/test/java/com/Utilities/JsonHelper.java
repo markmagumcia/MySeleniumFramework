@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class JsonHelper {
     String currentDirectory = System.getProperty("user.dir");
-    
+    ObjectMapper mapper = new ObjectMapper();
 
     public static JsonNode loadJson(String path) {
         String userDir = System.getProperty("user.dir");
@@ -37,5 +39,29 @@ public class JsonHelper {
       }
       return node;
     }
+
+    public ObjectNode createParentJSON (){
+      ObjectNode rootNode = mapper.createObjectNode();
+      return rootNode;
+    }
+    public ObjectNode createChildJSON(){
+      ObjectNode childNode = mapper.createObjectNode();
+      return childNode;
+    }
+
+    public ObjectNode addFieldsToChild(ObjectNode childNode,String fieldName, String value){
+      childNode.put(fieldName,value);
+      return childNode;
+    }
+
+    public void addChildToRoot(String propertyName, ObjectNode rootNode, ObjectNode childNode){
+      rootNode.set(propertyName,childNode);
+    }
+
+    public String outputRoot(ObjectNode rootNode) throws JsonProcessingException{
+      String jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(rootNode);
+      return jsonString;
+    }
+
   
 }
