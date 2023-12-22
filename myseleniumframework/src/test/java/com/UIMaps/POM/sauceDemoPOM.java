@@ -16,68 +16,85 @@ public class sauceDemoPOM {
     String sauceDemoURL = "https://www.saucedemo.com/";
     public BaseSelenium selenium;
 
-    public sauceDemoPOM (BaseSelenium selenium) {
+    public sauceDemoPOM(BaseSelenium selenium) {
         this.selenium = selenium;
 
     }
-    public void loadSauceDemoURL(){
+
+    public void loadSauceDemoURL() {
         BaseSelenium.launchBrowser(sauceDemoURL);
     }
-    public void loginToSauceDemo(String username, String password){
+
+    public void loginToSauceDemo(String username, String password) {
         selenium.enterText(sauceDemoXpaths.USERNAME, username);
         selenium.enterText(sauceDemoXpaths.PASSWORD, password);
         selenium.clickElement(sauceDemoXpaths.LOGIN_BUTTON);
     }
 
-    public boolean isDashboardDisplayed(){
+    public boolean isDashboardDisplayed() {
         return selenium.isElementDisplayed(sauceDemoXpaths.DASHBOARD);
-   }
+    }
 
-    public void makeInventoryJSON(){
-        String elementID,itemName,itemDesc,itemPrice;
+    public void makeInventoryJSON() {
+        String elementID, itemName, itemDesc, itemPrice;
         String[] split;
         JsonHelper json = new JsonHelper();
         ObjectNode resultJSON = json.createParentJSON();
-    
-      
-      
-        
+       
+        int i = 1;
         List<WebElement> listOfElements = selenium.findElements("//div[@class='inventory_item']/div/a");
-        for (WebElement e: listOfElements){
+        for (WebElement e : listOfElements) {
+            ObjectNode childNode = json.createChildJSON();
             WebElement itemDescElement;
-            elementID=e.getAttribute("id");
+            elementID = e.getAttribute("id");
             split = elementID.split("_");
-            
-            //a[contains(@id,'item_4_')]/parent::div[@class='inventory_item_label']
-            String itemDescXpath = "//a[contains(@id,'item_"+ split[1] + "_')]/parent::div[@class='inventory_item_label']";
+            String itemDescXpath = "//a[contains(@id,'item_" + split[1]
+                    + "_')]/parent::div[@class='inventory_item_label']";
+            String itemPriceXpath = "//a[contains(@id,'item_" + split[1]
+                    + "_')]/../..//div[@class='inventory_item_price']";
             itemDescElement = selenium.findElement(By.xpath(itemDescXpath));
-            itemName = itemDescElement.findElement(By.xpath("//div[@class='inventory_item_name ']")).getText();
-            itemDesc = itemDescElement.findElement(By.xpath("//div[@class='inventory_item_desc']")).getText();
-            System.out.println(itemName);
-            System.out.println(itemDesc);
+            itemName = itemDescElement.findElement(By.xpath(".//div[@class='inventory_item_name ']")).getText();
+            itemDesc = itemDescElement.findElement(By.xpath(".//div[@class='inventory_item_desc']")).getText();
+            itemPrice = selenium.findElement(By.xpath(itemPriceXpath)).getText();
+            // System.out.println(itemName);
+            // System.out.println(itemDesc);
+            // System.out.println(itemPrice);
+            json.addFieldsToChild(childNode, "itemName", itemName);
+            json.addFieldsToChild(childNode, "itemDesc", itemDesc);
+            json.addFieldsToChild(childNode, "itemPrice", itemPrice);
+            json.addChildToRoot("Test Data#" + i, resultJSON, childNode);
+            i++;
+
         }
-        
-        // for (int i = 1; i<=dashboardItemsCount; i++){
-        //     ObjectNode childNode=json.createChildJSON();
-        //     String xpath = "//div[@class='inventory_item']";
-        //     element = selenium.findElements(xpath).get(i);
-        //     elemento = element.findElement(By.xpath("/*//a"));
-        //     System.out.println(elemento.getAttribute("id"));
-        //     itemName = element.findElement(By.xpath("//div[@class='inventory_item_name ']")).getText();
-        //     itemDesc = element.findElement(By.xpath("//div[@class='inventory_item_desc']")).getText();
-        //     itemPrice = element.findElement(By.xpath("//div[@class='inventory_item_price']")).getText();
-        //     json.addFieldsToChild(childNode,"itemName", itemName);
-        //     json.addFieldsToChild(childNode,"itemDesc", itemDesc);
-        //     json.addFieldsToChild(childNode,"itemPrice", itemPrice);
-        //     json.addChildToRoot("Test Data#"+i, resultJSON, childNode);
-        //     try {
-        //         System.out.println(json.outputRoot(resultJSON));
-        //     } catch (JsonProcessingException e) {
-        //         // TODO Auto-generated catch block
-        //         e.printStackTrace();
-        //     }
-        //}
-        
-        
+        try {
+            System.out.println(json.outputRoot(resultJSON));
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
+    // for (int i = 1; i<=dashboardItemsCount; i++){
+    // ObjectNode childNode=json.createChildJSON();
+    // String xpath = "//div[@class='inventory_item']";
+    // element = selenium.findElements(xpath).get(i);
+    // elemento = element.findElement(By.xpath("/*//a"));
+    // System.out.println(elemento.getAttribute("id"));
+    // itemName = element.findElement(By.xpath("//div[@class='inventory_item_name
+    // ']")).getText();
+    // itemDesc =
+    // element.findElement(By.xpath("//div[@class='inventory_item_desc']")).getText();
+    // itemPrice =
+    // element.findElement(By.xpath("//div[@class='inventory_item_price']")).getText();
+    // json.addFieldsToChild(childNode,"itemName", itemName);
+    // json.addFieldsToChild(childNode,"itemDesc", itemDesc);
+    // json.addFieldsToChild(childNode,"itemPrice", itemPrice);
+    // json.addChildToRoot("Test Data#"+i, resultJSON, childNode);
+    // try {
+    // System.out.println(json.outputRoot(resultJSON));
+    // } catch (JsonProcessingException e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
+    // }
+
 }
