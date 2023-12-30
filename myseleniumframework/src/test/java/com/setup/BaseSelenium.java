@@ -3,13 +3,21 @@ package com.setup;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.List;
 
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.appender.FileAppender;
+import org.apache.logging.log4j.core.config.AppenderRef;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.layout.PatternLayout;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,8 +29,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class BaseSelenium {
-	//private static Logger log = LogManager.getLogger(LoggerLoad.class);
-    public static Logger log = LogManager.getLogger(BaseSelenium.class);
+	private static Logger log = LogManager.getLogger();
+	static String currentDirectory =  System.getProperty("user.dir") + "\\src\\test\\logs\\";
+	static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-ms");
 	//private static String URL = "https://jupiter.cloud.planittesting.com/";
 	static WebDriver driver;
 	static WebDriverWait wait;
@@ -90,6 +99,25 @@ public class BaseSelenium {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 		driver.findElement(By.xpath(xpath)).click();
 	}
+
+	 public static void setupFileLoggers() {
+		Date date = new Date();
+		currentDirectory = currentDirectory + dateFormat.format(date) + ".log";
+        LoggerContext context = (LoggerContext) LogManager.getContext(false);
+        Configuration config = context.getConfiguration();
+
+        PatternLayout layout = PatternLayout.newBuilder()
+                .withPattern("%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n")
+                .build();
+        FileAppender appender = FileAppender.newBuilder().setConfiguration(config).withFileName(currentDirectory)
+                .withAppend(false).withLocking(false).setName("File").withAdvertise(false).setLayout(layout).build();
+        appender.start();
+        config.getRootLogger().removeAppender("File");
+        config.addAppender(appender);
+        AppenderRef.createAppenderRef("File", null, null);
+        config.getRootLogger().addAppender(appender, Level.DEBUG, null);
+        context.updateLoggers();
+    }
 
 
 }
