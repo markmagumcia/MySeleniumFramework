@@ -14,8 +14,15 @@ public class SauceDemoTests extends PageObjectConnectors{
         sauceDemo.loginToSauceDemo("standard_user","secret_sauce");
         assertTrue(sauceDemo.isDashboardDisplayed());
         sauceDemo.makeInventoryJSON();
+        
 
 
     }
-    
+    @Test
+    public void test2(){
+        sauceDemo.loadSauceDemoURL();
+       
+
+
+    }
 }
