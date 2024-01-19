@@ -17,7 +17,7 @@ import org.apache.logging.log4j.core.appender.FileAppender;
 import org.apache.logging.log4j.core.config.AppenderRef;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.layout.PatternLayout;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -118,6 +118,10 @@ public class BaseSelenium {
         config.getRootLogger().addAppender(appender, Level.DEBUG, null);
         context.updateLoggers();
     }
+	@BeforeEach
+	public void setup(){
+		setupFileLoggers();
+	}
 
 
 }
