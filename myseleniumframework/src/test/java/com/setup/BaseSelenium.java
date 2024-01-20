@@ -18,8 +18,8 @@ import org.apache.logging.log4j.core.config.AppenderRef;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -121,11 +121,11 @@ public class BaseSelenium {
         context.updateLoggers();
     }
 	@BeforeEach
-	public static void setup(){
+	public void setup(TestInfo TestInfo){
 		setupFileLoggers();
 	}
 	@AfterEach
-	public static void teardown(){
+	public void teardown(){
 		driver.close();
 	}
 

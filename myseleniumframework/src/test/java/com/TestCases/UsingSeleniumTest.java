@@ -42,7 +42,7 @@ public class UsingSeleniumTest {
     @Test
 
     public void getJSON(){
-        String userDir = System.getProperty("user.dir");
+        //String userDir = System.getProperty("user.dir");
         JsonNode json = JsonHelper.loadJson("\\src\\test\\java\\com\\TestData\\Create Individual Business Party.json");
         
         System.out.println(json.get("partyNo"));
