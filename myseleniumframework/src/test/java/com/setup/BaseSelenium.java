@@ -3,12 +3,14 @@ package com.setup;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 
-
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,26 +19,29 @@ import org.apache.logging.log4j.core.appender.FileAppender;
 import org.apache.logging.log4j.core.config.AppenderRef;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.layout.PatternLayout;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.TakesScreenshot;
 
 
 
 
 public class BaseSelenium {
-	private static Logger log = LogManager.getLogger();
+	public static Logger log = LogManager.getLogger();
 	static String currentDirectory =  System.getProperty("user.dir") + "\\src\\test\\logs\\";
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-ms");
 	//private static String URL = "https://jupiter.cloud.planittesting.com/";
-	static WebDriver driver;
-	static WebDriverWait wait;
+	public static WebDriver driver;
+	public static WebDriverWait wait;
 
 	public BaseSelenium(){
 
@@ -102,10 +107,8 @@ public class BaseSelenium {
 		driver.findElement(By.xpath(xpath)).click();
 	}
 
-	 public static void setupFileLoggers() {
-		Date date = new Date();
-		currentDirectory = currentDirectory + dateFormat.format(date) + ".log";
-        LoggerContext context = (LoggerContext) LogManager.getContext(false);
+	 public static void setupFileLoggers(String currentDirectory) {
+		LoggerContext context = (LoggerContext) LogManager.getContext(false);
         Configuration config = context.getConfiguration();
 
         PatternLayout layout = PatternLayout.newBuilder()
@@ -120,13 +123,11 @@ public class BaseSelenium {
         config.getRootLogger().addAppender(appender, Level.DEBUG, null);
         context.updateLoggers();
     }
-	@BeforeEach
-	public void setup(TestInfo TestInfo){
-		setupFileLoggers();
+	
+	public void takeScreenshot(String directory) throws IOException{
+		
+		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		File DestFile = new File(directory);
+		FileUtils.copyFile(scrFile,DestFile);
 	}
-	@AfterEach
-	public void teardown(){
-		driver.close();
-	}
-
 }

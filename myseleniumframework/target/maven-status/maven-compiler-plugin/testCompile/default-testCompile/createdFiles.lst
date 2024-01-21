@@ -1,9 +1,1 @@
-com\UIMaps\xpaths\sauceDemoXpaths.class
-com\TestCases\UsingSeleniumTest.class
-com\setup\BaseSelenium.class
 com\UIMaps\POM\sauceDemoPOM.class
-com\Utilities\WebElementsHelper.class
-com\TestCases\SauceDemoTests.class
-com\Utilities\JsonHelper.class
-com\Utilities\LoggerLoad.class
-com\UIMaps\PageObjectConnectors.class
