@@ -26,24 +26,6 @@ public class SauceDemoTests extends PageObjectConnectors{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        // try {
-        //     selenium.takeFullScreenshot(SetupTeardown.runDirectory);
-        // } catch (IOException e) {
-        //     // TODO Auto-generated catch block
-        //     e.printStackTrace();
-        // }
-        //sauceDemo.makeInventoryJSON();
-        
-
-
     }
-    @Test
-    public void test2(){
-     //   BaseSelenium.setupFileLoggers();
-        sauceDemo.loadSauceDemoURL();
-       
-
-
-    }
+    
 }
