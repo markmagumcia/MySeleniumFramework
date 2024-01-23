@@ -20,6 +20,7 @@ public class SetupTeardown {
         SetupTeardown.logDirectory = SetupTeardown.runDirectory +"\\" + dateFormat.format(date) + ".log";
         new File(SetupTeardown.runDirectory).mkdirs();
         BaseSelenium.setupFileLoggers(SetupTeardown.logDirectory);
+        BaseSelenium.initializeExtentReport("test name", SetupTeardown.runDirectory);
         
     }
     @AfterEach

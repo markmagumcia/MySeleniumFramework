@@ -146,4 +146,13 @@ public class BaseSelenium {
 		Screenshot s = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(2000)).takeScreenshot(driver);
 		ImageIO.write(s.getImage(),"JPG",DestFile);
 	}
+
+	public static void initializeExtentReport(String testName, String directory){
+		directory = directory + ".html";
+		System.out.println(directory);
+
+
+
+	}
+
 }
