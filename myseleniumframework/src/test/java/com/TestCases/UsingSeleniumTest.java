@@ -1,10 +1,14 @@
-package com.myseleniumframework;
+package com.TestCases;
 
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import com.Utilities.JsonHelper;
+import com.fasterxml.jackson.databind.JsonNode;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.Duration;
 
@@ -33,6 +37,17 @@ public class UsingSeleniumTest {
         assertEquals("Received!", value);
 
         driver.quit();
+    }
+
+    @Test
+
+    public void getJSON(){
+        //String userDir = System.getProperty("user.dir");
+        JsonNode json = JsonHelper.loadJson("\\src\\test\\java\\com\\TestData\\Create Individual Business Party.json");
+        
+        System.out.println(json.get("partyNo"));
+
+
     }
 
 }
