@@ -10,6 +10,8 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -20,9 +22,6 @@ import org.apache.logging.log4j.core.config.AppenderRef;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
@@ -32,6 +31,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.TakesScreenshot;
 
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 
 
@@ -51,7 +53,7 @@ public class BaseSelenium {
 		driver = new ChromeDriver();
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		log.info("Launching: {}", URL);
-        driver.manage().window().fullscreen();
+        driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		driver.get(URL);
 
@@ -125,9 +127,23 @@ public class BaseSelenium {
     }
 	
 	public void takeScreenshot(String directory) throws IOException{
+		String screenshotFileName ="";
+		Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+		screenshotFileName = "Screenshot" + dateFormat.format(date);
 		
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		File DestFile = new File(directory);
+		File DestFile = new File(directory+"\\"+ screenshotFileName +".jpg");
 		FileUtils.copyFile(scrFile,DestFile);
+	}
+
+	public void takeFullScreenshot (String directory) throws IOException {
+		String screenshotFileName ="";
+		Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+		screenshotFileName = "Full Screenshot " + dateFormat.format(date);
+		File DestFile = new File(directory+"\\"+ screenshotFileName +".jpg");
+		Screenshot s = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(2000)).takeScreenshot(driver);
+		ImageIO.write(s.getImage(),"JPG",DestFile);
 	}
 }

@@ -73,28 +73,6 @@ public class sauceDemoPOM {
             e.printStackTrace();
         }
     }
-    // for (int i = 1; i<=dashboardItemsCount; i++){
-    // ObjectNode childNode=json.createChildJSON();
-    // String xpath = "//div[@class='inventory_item']";
-    // element = selenium.findElements(xpath).get(i);
-    // elemento = element.findElement(By.xpath("/*//a"));
-    // System.out.println(elemento.getAttribute("id"));
-    // itemName = element.findElement(By.xpath("//div[@class='inventory_item_name
-    // ']")).getText();
-    // itemDesc =
-    // element.findElement(By.xpath("//div[@class='inventory_item_desc']")).getText();
-    // itemPrice =
-    // element.findElement(By.xpath("//div[@class='inventory_item_price']")).getText();
-    // json.addFieldsToChild(childNode,"itemName", itemName);
-    // json.addFieldsToChild(childNode,"itemDesc", itemDesc);
-    // json.addFieldsToChild(childNode,"itemPrice", itemPrice);
-    // json.addChildToRoot("Test Data#"+i, resultJSON, childNode);
-    // try {
-    // System.out.println(json.outputRoot(resultJSON));
-    // } catch (JsonProcessingException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
-    // }
+   
 
 }
