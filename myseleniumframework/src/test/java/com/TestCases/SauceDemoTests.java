@@ -19,13 +19,14 @@ public class SauceDemoTests extends PageObjectConnectors{
         
         sauceDemo.loadSauceDemoURL();
         sauceDemo.loginToSauceDemo("standard_user","secret_sauce");
-        assertTrue(sauceDemo.isDashboardDisplayed());
-         try {
-            selenium.takeScreenshot(SetupTeardown.runDirectory);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        //assertTrue(sauceDemo.isDashboardDisplayed());
+        sauceDemo.assertDashboardDisplayed();
+        //  try {
+        //     selenium.takeScreenshot(SetupTeardown.runDirectory);
+        // } catch (IOException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
     }
     
 }

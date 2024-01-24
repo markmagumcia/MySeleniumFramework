@@ -29,6 +29,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
+
 import org.openqa.selenium.TakesScreenshot;
 
 import ru.yandex.qatools.ashot.AShot;
@@ -44,6 +51,13 @@ public class BaseSelenium {
 	//private static String URL = "https://jupiter.cloud.planittesting.com/";
 	public static WebDriver driver;
 	public static WebDriverWait wait;
+
+	public static ExtentSparkReporter spark;
+	public static ExtentReports extent;
+	public static ExtentTest logger;
+	
+	public static String screenshotFileName;
+	public static String screenshotPath;
 
 	public BaseSelenium(){
 
@@ -82,10 +96,8 @@ public class BaseSelenium {
 		return driver.findElements(By.xpath(xpath));
 	}
 
-	public void verifyElementIsDisplayed(String xpath) {
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
-		assertTrue(driver.findElement(By.xpath(xpath)).isDisplayed());
-	}
+
+
 
 	public void verifyElementIsNotDisplayed(String xpath) {
 		assertTrue(driver.findElements(By.xpath(xpath)).size() == 0);
@@ -127,22 +139,22 @@ public class BaseSelenium {
     }
 	
 	public void takeScreenshot(String directory) throws IOException{
-		String screenshotFileName ="";
+		
 		Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-		screenshotFileName = "Screenshot" + dateFormat.format(date);
-		
+		BaseSelenium.screenshotFileName = "Screenshot " + dateFormat.format(date)+".png";
+		BaseSelenium.screenshotPath = directory+"\\"+BaseSelenium.screenshotFileName;
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		File DestFile = new File(directory+"\\"+ screenshotFileName +".jpg");
-		FileUtils.copyFile(scrFile,DestFile);
+		File DestFile = new File(BaseSelenium.screenshotPath);
+		FileUtils.copyFile(scrFile,DestFile );
 	}
 
 	public void takeFullScreenshot (String directory) throws IOException {
-		String screenshotFileName ="";
+		
 		Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 		screenshotFileName = "Full Screenshot " + dateFormat.format(date);
-		File DestFile = new File(directory+"\\"+ screenshotFileName +".jpg");
+		File DestFile = new File(directory+"\\"+ screenshotFileName +".png");
 		Screenshot s = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(2000)).takeScreenshot(driver);
 		ImageIO.write(s.getImage(),"JPG",DestFile);
 	}
@@ -150,9 +162,54 @@ public class BaseSelenium {
 	public static void initializeExtentReport(String testName, String directory){
 		directory = directory + ".html";
 		System.out.println(directory);
+		
+		extent = new ExtentReports();
+		spark = new ExtentSparkReporter(directory);
+		extent.attachReporter(spark);
+		extent.setSystemInfo("Host Name", "Test trial");
+		extent.setSystemInfo("Environment", "TestEnv");
+		extent.setSystemInfo("User Name", "saucedemoUserName");
+		spark.config().setDocumentTitle("This is title");
+		spark.config().setReportName("this is report name");
+		spark.config().setTheme(Theme.STANDARD);
+		logger = extent.createTest(testName);
+		logger.createNode("create node1 ");
+		logger.createNode ("create Node 2");
+		
 
-
+		// //ExtentSparkReporter reporter = new ExtentSparkReporter(directory);
+		// String css = "img {width: 400%;} div.test-list{display: none;} div[class=\"test-wrapper row view test-view\"]{flex:auto; width: 140%; max-width:150%;}";
+        // reporter.config().setCss(css);
+        // reporter.config().setTimelineEnabled(true);
+        // reporter.config().setEncoding("utf-8");
+        // reporter.config().setJs("js-string");
+        // reporter.config().setProtocol(Protocol.HTTPS);
+        // reporter.config().setReporter(reporter);
+        // extent.attachReporter(reporter);
+        // logger = extent.createTest(testName);
 
 	}
+
+	public void assertElementIsVisible(String xpath) {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+		assertTrue(isElementDisplayed(xpath));
+		//String fullPath = SetupTeardown.runDirectory+ ".jpg";
+		
+		try {
+			takeScreenshot(SetupTeardown.runDirectory);
+			String fullPath = BaseSelenium.screenshotPath;
+			log.info("Assert Element {} visible: PASSED", xpath);
+			logger.pass("test PASSED", MediaEntityBuilder.createScreenCaptureFromPath(fullPath).build());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			
+			String fullPath = BaseSelenium.screenshotPath + ".png";
+			log.info("Assert Element {} visible: FAILED", xpath);
+			logger.fail("test FAILED", MediaEntityBuilder.createScreenCaptureFromPath(fullPath).build());
+			e.printStackTrace();
+		}
+		
+	}
+
 
 }

@@ -31,6 +31,10 @@ public class sauceDemoPOM {
         selenium.clickElement(sauceDemoXpaths.LOGIN_BUTTON);
     }
 
+    public void assertDashboardDisplayed(){
+        selenium.assertElementIsVisible(sauceDemoXpaths.DASHBOARD);
+    }
+
     public boolean isDashboardDisplayed() {
         return selenium.isElementDisplayed(sauceDemoXpaths.DASHBOARD);
     }
