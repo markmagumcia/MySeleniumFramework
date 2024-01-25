@@ -21,7 +21,7 @@ import org.apache.logging.log4j.core.appender.FileAppender;
 import org.apache.logging.log4j.core.config.AppenderRef;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.layout.PatternLayout;
-
+import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
@@ -159,7 +159,7 @@ public class BaseSelenium {
 		ImageIO.write(s.getImage(),"JPG",DestFile);
 	}
 
-	public static void initializeExtentReport(String testName, String directory){
+	public static void initializeExtentReport(TestInfo testInfo, String directory){
 		directory = directory + ".html";
 		System.out.println(directory);
 		
@@ -169,12 +169,12 @@ public class BaseSelenium {
 		extent.setSystemInfo("Host Name", "Test trial");
 		extent.setSystemInfo("Environment", "TestEnv");
 		extent.setSystemInfo("User Name", "saucedemoUserName");
-		spark.config().setDocumentTitle("This is title");
+		spark.config().setDocumentTitle(testInfo.getTestClass().toString());
 		spark.config().setReportName("this is report name");
 		spark.config().setTheme(Theme.STANDARD);
-		logger = extent.createTest(testName);
-		logger.createNode("create node1 ");
-		logger.createNode ("create Node 2");
+		//logger = extent.createTest(testInfo.getDisplayName());
+		// logger.createNode("create node1 ");
+		// logger.createNode ("create Node 2");
 		
 
 		// //ExtentSparkReporter reporter = new ExtentSparkReporter(directory);
@@ -187,6 +187,10 @@ public class BaseSelenium {
         // reporter.config().setReporter(reporter);
         // extent.attachReporter(reporter);
         // logger = extent.createTest(testName);
+
+	}
+
+	public void verifyCondition(String condition){
 
 	}
 

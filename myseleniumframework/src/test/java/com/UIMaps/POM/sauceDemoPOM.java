@@ -35,6 +35,10 @@ public class sauceDemoPOM {
         selenium.assertElementIsVisible(sauceDemoXpaths.DASHBOARD);
     }
 
+    public void asserLoginPageIsLoading(){
+        selenium.assertElementIsVisible(sauceDemoXpaths.LOGIN_BUTTON);
+    }
+
     public boolean isDashboardDisplayed() {
         return selenium.isElementDisplayed(sauceDemoXpaths.DASHBOARD);
     }
