@@ -1,19 +1,12 @@
 package com.TestCases;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.IOException;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.TestInstance;
 
 import com.UIMaps.PageObjectConnectors;
-
-import com.setup.SetupTeardown;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SauceDemoTests extends PageObjectConnectors{
@@ -26,13 +19,12 @@ public class SauceDemoTests extends PageObjectConnectors{
         sauceDemo.loadSauceDemoURL();
         sauceDemo.loginToSauceDemo("standard_user","secret_sauce");
         sauceDemo.assertDashboardDisplayed();
-       
+        
     }
     
     @Test
     @Order(1)
     @DisplayName("Verify if Sauce Demo Login Page is loading")
-    @Tag("my-tag")
     public void SauceDemoLoginPageVerification(TestInfo testInfo){
         sauceDemo.loadSauceDemoURL();
         sauceDemo.asserLoginPageIsLoading();

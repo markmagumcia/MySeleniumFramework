@@ -40,21 +40,22 @@ public class BaseSelenium {
 	public static Logger log = LogManager.getLogger();
 	static String currentDirectory = System.getProperty("user.dir") + "\\src\\test\\logs\\";
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-ms");
-	// private static String URL = "https://jupiter.cloud.planittesting.com/";
 	public static WebDriver driver;
 	public static WebDriverWait wait;
-
 	public static ExtentSparkReporter spark;
 	public static ExtentReports extent;
 	public static ExtentTest logger;
-
 	public static String screenshotFileName;
 	public static String screenshotPath;
-
+	
 	public BaseSelenium() {
 
 	}
 
+	/**
+	 * Opens a browser and launches the url Specified
+	 * @param URL
+	 */
 	public static void launchBrowser(String URL) {
 		driver = new ChromeDriver();
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -65,11 +66,20 @@ public class BaseSelenium {
 
 	}
 
+	/**
+	 * Closes the browser 
+	 * @param URL
+	 */
 	public static void closeBrowser(String URL) {
 		log.info("Closing: {} ", URL);
 		driver.quit();
 	}
 
+	/**
+	 * Checks for an Element if it is displayed or not based on the given xpath
+	 * @param xpath - xpath of the element
+	 * @return - true if element is visible; false if element is not visible
+	 */
 	public boolean isElementDisplayed(String xpath) {
 		try {
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
@@ -82,33 +92,66 @@ public class BaseSelenium {
 
 	}
 
+	/**
+	 * Returns web element 
+	 * @param by
+	 * @return
+	 */
 	public WebElement findElement(By by) {
 		return driver.findElement(by);
 	}
 
+	/**
+	 * Returns List of Web Elements 
+	 * @param xpath
+	 * @return
+	 */
 	public List<WebElement> findElements(String xpath) {
 		return driver.findElements(By.xpath(xpath));
 	}
 
+	/**
+	 * Verify if Element is not displayed. 
+	 * @param xpath
+	 */
 	public void verifyElementIsNotDisplayed(String xpath) {
 		assertTrue(driver.findElements(By.xpath(xpath)).size() == 0);
 	}
 
+	/**
+	 * Enters text to specified xpath
+	 * @param xpath
+	 * @param text
+	 */
 	public void enterText(String xpath, String text) {
 		WebElement element = driver.findElement(By.xpath(xpath));
 		element.clear();
 		element.sendKeys(text);
 	}
 
+	/**
+	 * Gets the text based on the described element by the xpath
+	 * @param xpath
+	 * @return
+	 */
 	public String getText(String xpath) {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 		return driver.findElement(By.xpath(xpath)).getText();
 	}
 
+	/**
+	 * Performs Click on the described element by the xpath
+	 * @param xpath
+	 */
 	public void clickElement(String xpath) {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 		driver.findElement(By.xpath(xpath)).click();
 	}
+
+	/**
+	 * This method initializes the test loggers
+	 * @param currentDirectory
+	 */
 
 	public static void setupFileLoggers(String currentDirectory) {
 		LoggerContext context = (LoggerContext) LogManager.getContext(false);
@@ -127,6 +170,10 @@ public class BaseSelenium {
 		context.updateLoggers();
 	}
 
+	/**
+	 * Performs screenshot
+	 * @param directory
+	 */
 	public void takeScreenshot(String directory) {
 
 		Date date = new Date();
@@ -143,6 +190,12 @@ public class BaseSelenium {
 		}
 	}
 
+	/**
+	 * Initializes Extents report
+	 * @param testInfo - the @Test Info in the tests class
+	 * @param directory - run directory that was initiated
+	 */
+
 	public static void initializeExtentReport(TestInfo testInfo, String directory) {
 		directory = directory + ".html";
 		System.out.println(directory);
@@ -158,6 +211,12 @@ public class BaseSelenium {
 		spark.config().setTheme(Theme.STANDARD);
 		
 	}
+
+	/**
+	 * Verifies a step. Adds a step entry to the reporting file generated
+	 * @param stepDescription
+	 * @param stepResult
+	 */
 
 	public void verifyCondition(String stepDescription, Boolean stepResult) {
 		ExtentTest node;
@@ -178,6 +237,10 @@ public class BaseSelenium {
 
 	}
 
+	/**
+	 * Triggers JUNIT Assert. This asserts if Element described by xpat is visible. 
+	 * @param xpath
+	 */
 	public void assertElementIsVisible(String xpath) {
 		String fullPath = "";
 		boolean elementVisible;
@@ -186,7 +249,6 @@ public class BaseSelenium {
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 			elementVisible = true;
 		} catch (TimeoutException e) {
-			// TODO: handle exception
 			elementVisible = false;
 		}
 		takeScreenshot(SetupTeardown.runDirectory);

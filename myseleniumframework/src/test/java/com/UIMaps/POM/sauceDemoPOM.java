@@ -16,30 +16,46 @@ public class sauceDemoPOM {
     String sauceDemoURL = "https://www.saucedemo.com/";
     public BaseSelenium selenium;
 
+    /**
+     * Assigns Selenium instance to this Page Object Model
+     * @param selenium
+     */
     public sauceDemoPOM(BaseSelenium selenium) {
         this.selenium = selenium;
-
     }
 
+    /**
+     * Loads the page described by the URL
+     */
     public void loadSauceDemoURL() {
         BaseSelenium.launchBrowser(sauceDemoURL);
         selenium.verifyCondition("Verify Sauce Demo Website Loads",
-        selenium.isElementDisplayed(sauceDemoXpaths.USERNAME));
+                selenium.isElementDisplayed(sauceDemoXpaths.USERNAME));
     }
+    /**
+     * Logs in to Sauce Demo Website
+     * @param username
+     * @param password
+     */
 
     public void loginToSauceDemo(String username, String password) {
         selenium.enterText(sauceDemoXpaths.USERNAME, username);
         selenium.enterText(sauceDemoXpaths.PASSWORD, password);
         selenium.clickElement(sauceDemoXpaths.LOGIN_BUTTON);
         selenium.verifyCondition("Verify User is Logged in and Dashboard is displayed",
-        selenium.isElementDisplayed(sauceDemoXpaths.DASHBOARD));
+                selenium.isElementDisplayed(sauceDemoXpaths.DASHBOARD));
     }
-
-    public void assertDashboardDisplayed(){
+    /**
+     * Asserts Dashboard is displayed
+     */
+    public void assertDashboardDisplayed() {
         selenium.assertElementIsVisible(sauceDemoXpaths.DASHBOARD);
     }
 
-    public void asserLoginPageIsLoading(){
+    /**
+     * Assert if Login Page loads
+     */
+    public void asserLoginPageIsLoading() {
         selenium.assertElementIsVisible(sauceDemoXpaths.LOGIN_BUTTON);
     }
 
@@ -47,12 +63,15 @@ public class sauceDemoPOM {
         return selenium.isElementDisplayed(sauceDemoXpaths.DASHBOARD);
     }
 
+    /**
+     * Special function to output a JSON of the items in the dashboard
+     */
     public void makeInventoryJSON() {
         String elementID, itemName, itemDesc, itemPrice;
         String[] split;
         JsonHelper json = new JsonHelper();
         ObjectNode resultJSON = json.createParentJSON();
-       
+
         int i = 1;
         List<WebElement> listOfElements = selenium.findElements("//div[@class='inventory_item']/div/a");
         for (WebElement e : listOfElements) {
@@ -68,9 +87,6 @@ public class sauceDemoPOM {
             itemName = itemDescElement.findElement(By.xpath(".//div[@class='inventory_item_name ']")).getText();
             itemDesc = itemDescElement.findElement(By.xpath(".//div[@class='inventory_item_desc']")).getText();
             itemPrice = selenium.findElement(By.xpath(itemPriceXpath)).getText();
-            // System.out.println(itemName);
-            // System.out.println(itemDesc);
-            // System.out.println(itemPrice);
             json.addFieldsToChild(childNode, "itemName", itemName);
             json.addFieldsToChild(childNode, "itemDesc", itemDesc);
             json.addFieldsToChild(childNode, "itemPrice", itemPrice);
@@ -81,10 +97,8 @@ public class sauceDemoPOM {
         try {
             System.out.println(json.outputRoot(resultJSON));
         } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-   
 
 }
