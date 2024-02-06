@@ -161,7 +161,7 @@ public class BaseSelenium {
 
 	public void verifyCondition(String stepDescription, Boolean stepResult) {
 		ExtentTest node;
-		node = logger.createNode(stepDescription);
+		node = BaseSelenium.logger.createNode(stepDescription);
 		String fullPath = "";
 
 		takeScreenshot(SetupTeardown.runDirectory);
@@ -192,14 +192,14 @@ public class BaseSelenium {
 		takeScreenshot(SetupTeardown.runDirectory);
 		fullPath = BaseSelenium.screenshotPath;
 		if (elementVisible) {
-			assertTrue(elementVisible, "Element Visible");
+			
 			log.info("Assert Element {} visible: PASSED", xpath);
-			logger.pass("Test PASSED", MediaEntityBuilder.createScreenCaptureFromPath(fullPath).build());
-
+			BaseSelenium.logger.pass("Test PASSED", MediaEntityBuilder.createScreenCaptureFromPath(fullPath).build());
+			assertTrue(elementVisible, "Element Visible");
 		} else {
-			assertTrue(elementVisible, "Element NOT Visible");
 			log.info("Assert Element {} visible: FAILED", xpath);
-			logger.fail("Test FAILED", MediaEntityBuilder.createScreenCaptureFromPath(fullPath).build());
+			BaseSelenium.logger.fail("Test FAILED", MediaEntityBuilder.createScreenCaptureFromPath(fullPath).build());
+			assertTrue(elementVisible, "Element NOT Visible");
 		}
 
 	}
