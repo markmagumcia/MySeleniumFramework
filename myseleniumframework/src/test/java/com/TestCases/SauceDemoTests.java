@@ -28,10 +28,7 @@ public class SauceDemoTests extends PageObjectConnectors{
     public void SauceDemoLoginPageVerification(TestInfo testInfo){
         sauceDemo.loadSauceDemoURL();
         sauceDemo.asserLoginPageIsLoading();
-        System.out.println(testInfo.getDisplayName());
-        System.out.println(testInfo.getTags());
-        System.out.println(testInfo.getTestClass());
-        System.out.println(testInfo.getTestMethod());
+    
     }
     
 }
