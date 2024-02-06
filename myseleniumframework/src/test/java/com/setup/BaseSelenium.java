@@ -1,6 +1,5 @@
 package com.setup;
 
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -9,9 +8,6 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
-
-import javax.imageio.ImageIO;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -33,77 +29,70 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
 import org.openqa.selenium.TakesScreenshot;
-
-import ru.yandex.qatools.ashot.AShot;
-import ru.yandex.qatools.ashot.Screenshot;
-import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
-
-
+import org.openqa.selenium.TimeoutException;
 
 public class BaseSelenium {
 	public static Logger log = LogManager.getLogger();
-	static String currentDirectory =  System.getProperty("user.dir") + "\\src\\test\\logs\\";
+	static String currentDirectory = System.getProperty("user.dir") + "\\src\\test\\logs\\";
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-ms");
-	//private static String URL = "https://jupiter.cloud.planittesting.com/";
+	// private static String URL = "https://jupiter.cloud.planittesting.com/";
 	public static WebDriver driver;
 	public static WebDriverWait wait;
 
 	public static ExtentSparkReporter spark;
 	public static ExtentReports extent;
 	public static ExtentTest logger;
-	
+
 	public static String screenshotFileName;
 	public static String screenshotPath;
 
-	public BaseSelenium(){
+	public BaseSelenium() {
 
 	}
 
-    public static void launchBrowser(String URL) {
+	public static void launchBrowser(String URL) {
 		driver = new ChromeDriver();
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		log.info("Launching: {}", URL);
-        driver.manage().window().maximize();
+		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		driver.get(URL);
 
 	}
-    	public static void closeBrowser(String URL) {
+
+	public static void closeBrowser(String URL) {
 		log.info("Closing: {} ", URL);
 		driver.quit();
 	}
 
-	public boolean isElementDisplayed(String xpath){
-		try{
+	public boolean isElementDisplayed(String xpath) {
+		try {
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 			log.info("Element {} is displayed", xpath);
 			return driver.findElement(By.xpath(xpath)).isDisplayed();
-		} catch (Exception e) {
+		} catch (TimeoutException e) {
+			log.info("Element {} is not displayed", xpath);
 			return false;
 		}
 
 	}
 
-	public WebElement findElement(By by){
+	public WebElement findElement(By by) {
 		return driver.findElement(by);
 	}
 
-	public List<WebElement> findElements(String xpath){
+	public List<WebElement> findElements(String xpath) {
 		return driver.findElements(By.xpath(xpath));
 	}
-
-
-
 
 	public void verifyElementIsNotDisplayed(String xpath) {
 		assertTrue(driver.findElements(By.xpath(xpath)).size() == 0);
 	}
-
-
 
 	public void enterText(String xpath, String text) {
 		WebElement element = driver.findElement(By.xpath(xpath));
@@ -121,48 +110,43 @@ public class BaseSelenium {
 		driver.findElement(By.xpath(xpath)).click();
 	}
 
-	 public static void setupFileLoggers(String currentDirectory) {
+	public static void setupFileLoggers(String currentDirectory) {
 		LoggerContext context = (LoggerContext) LogManager.getContext(false);
-        Configuration config = context.getConfiguration();
+		Configuration config = context.getConfiguration();
 
-        PatternLayout layout = PatternLayout.newBuilder()
-                .withPattern("%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n")
-                .build();
-        FileAppender appender = FileAppender.newBuilder().setConfiguration(config).withFileName(currentDirectory)
-                .withAppend(false).withLocking(false).setName("File").withAdvertise(false).setLayout(layout).build();
-        appender.start();
-        config.getRootLogger().removeAppender("File");
-        config.addAppender(appender);
-        AppenderRef.createAppenderRef("File", null, null);
-        config.getRootLogger().addAppender(appender, Level.DEBUG, null);
-        context.updateLoggers();
-    }
-	
-	public void takeScreenshot(String directory) throws IOException{
-		
-		Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-		BaseSelenium.screenshotFileName = "Screenshot " + dateFormat.format(date)+".png";
-		BaseSelenium.screenshotPath = directory+"\\"+BaseSelenium.screenshotFileName;
-		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		File DestFile = new File(BaseSelenium.screenshotPath);
-		FileUtils.copyFile(scrFile,DestFile );
+		PatternLayout layout = PatternLayout.newBuilder()
+				.withPattern("%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n")
+				.build();
+		FileAppender appender = FileAppender.newBuilder().setConfiguration(config).withFileName(currentDirectory)
+				.withAppend(false).withLocking(false).setName("File").withAdvertise(false).setLayout(layout).build();
+		appender.start();
+		config.getRootLogger().removeAppender("File");
+		config.addAppender(appender);
+		AppenderRef.createAppenderRef("File", null, null);
+		config.getRootLogger().addAppender(appender, Level.DEBUG, null);
+		context.updateLoggers();
 	}
 
-	public void takeFullScreenshot (String directory) throws IOException {
-		
+	public void takeScreenshot(String directory) {
+
 		Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-		screenshotFileName = "Full Screenshot " + dateFormat.format(date);
-		File DestFile = new File(directory+"\\"+ screenshotFileName +".png");
-		Screenshot s = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(2000)).takeScreenshot(driver);
-		ImageIO.write(s.getImage(),"JPG",DestFile);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+
+		try {
+			BaseSelenium.screenshotFileName = "Screenshot " + dateFormat.format(date) + ".png";
+			BaseSelenium.screenshotPath = directory + "\\" + BaseSelenium.screenshotFileName;
+			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			File DestFile = new File(BaseSelenium.screenshotPath);
+			FileUtils.copyFile(scrFile, DestFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public static void initializeExtentReport(TestInfo testInfo, String directory){
+	public static void initializeExtentReport(TestInfo testInfo, String directory) {
 		directory = directory + ".html";
 		System.out.println(directory);
-		
+
 		extent = new ExtentReports();
 		spark = new ExtentSparkReporter(directory);
 		extent.attachReporter(spark);
@@ -172,48 +156,52 @@ public class BaseSelenium {
 		spark.config().setDocumentTitle(testInfo.getTestClass().toString());
 		spark.config().setReportName("this is report name");
 		spark.config().setTheme(Theme.STANDARD);
-		//logger = extent.createTest(testInfo.getDisplayName());
-		// logger.createNode("create node1 ");
-		// logger.createNode ("create Node 2");
 		
-
-		// //ExtentSparkReporter reporter = new ExtentSparkReporter(directory);
-		// String css = "img {width: 400%;} div.test-list{display: none;} div[class=\"test-wrapper row view test-view\"]{flex:auto; width: 140%; max-width:150%;}";
-        // reporter.config().setCss(css);
-        // reporter.config().setTimelineEnabled(true);
-        // reporter.config().setEncoding("utf-8");
-        // reporter.config().setJs("js-string");
-        // reporter.config().setProtocol(Protocol.HTTPS);
-        // reporter.config().setReporter(reporter);
-        // extent.attachReporter(reporter);
-        // logger = extent.createTest(testName);
-
 	}
 
-	public void verifyCondition(String condition){
+	public void verifyCondition(String stepDescription, Boolean stepResult) {
+		ExtentTest node;
+		node = logger.createNode(stepDescription);
+		String fullPath = "";
+
+		takeScreenshot(SetupTeardown.runDirectory);
+		fullPath = BaseSelenium.screenshotPath;
+
+		if (stepResult) {
+			node.getModel().setStatus(Status.PASS);
+			node.pass("Verification PASSED", MediaEntityBuilder.createScreenCaptureFromPath(fullPath).build());
+
+		} else {
+			node.getModel().setStatus(Status.FAIL);
+			node.fail("Verification FAILED", MediaEntityBuilder.createScreenCaptureFromPath(fullPath).build());
+		}
 
 	}
 
 	public void assertElementIsVisible(String xpath) {
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
-		assertTrue(isElementDisplayed(xpath));
-		//String fullPath = SetupTeardown.runDirectory+ ".jpg";
+		String fullPath = "";
+		boolean elementVisible;
 		
 		try {
-			takeScreenshot(SetupTeardown.runDirectory);
-			String fullPath = BaseSelenium.screenshotPath;
-			log.info("Assert Element {} visible: PASSED", xpath);
-			logger.pass("test PASSED", MediaEntityBuilder.createScreenCaptureFromPath(fullPath).build());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			
-			String fullPath = BaseSelenium.screenshotPath + ".png";
-			log.info("Assert Element {} visible: FAILED", xpath);
-			logger.fail("test FAILED", MediaEntityBuilder.createScreenCaptureFromPath(fullPath).build());
-			e.printStackTrace();
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+			elementVisible = true;
+		} catch (TimeoutException e) {
+			// TODO: handle exception
+			elementVisible = false;
 		}
-		
-	}
+		takeScreenshot(SetupTeardown.runDirectory);
+		fullPath = BaseSelenium.screenshotPath;
+		if (elementVisible) {
+			assertTrue(elementVisible, "Element Visible");
+			log.info("Assert Element {} visible: PASSED", xpath);
+			logger.pass("Test PASSED", MediaEntityBuilder.createScreenCaptureFromPath(fullPath).build());
 
+		} else {
+			assertTrue(elementVisible, "Element NOT Visible");
+			log.info("Assert Element {} visible: FAILED", xpath);
+			logger.fail("Test FAILED", MediaEntityBuilder.createScreenCaptureFromPath(fullPath).build());
+		}
+
+	}
 
 }

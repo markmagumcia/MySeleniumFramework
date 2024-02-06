@@ -23,12 +23,16 @@ public class sauceDemoPOM {
 
     public void loadSauceDemoURL() {
         BaseSelenium.launchBrowser(sauceDemoURL);
+        selenium.verifyCondition("Verify Sauce Demo Website Loads",
+        selenium.isElementDisplayed(sauceDemoXpaths.USERNAME));
     }
 
     public void loginToSauceDemo(String username, String password) {
         selenium.enterText(sauceDemoXpaths.USERNAME, username);
         selenium.enterText(sauceDemoXpaths.PASSWORD, password);
         selenium.clickElement(sauceDemoXpaths.LOGIN_BUTTON);
+        selenium.verifyCondition("Verify User is Logged in and Dashboard is displayed",
+        selenium.isElementDisplayed(sauceDemoXpaths.DASHBOARD));
     }
 
     public void assertDashboardDisplayed(){
