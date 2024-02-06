@@ -24,7 +24,7 @@ public class SauceDemoTests extends PageObjectConnectors{
     public void VerifyDashboardIsLoading(){
         
         sauceDemo.loadSauceDemoURL();
-        sauceDemo.loginToSauceDemo("standard_usere","secret_sauce");
+        sauceDemo.loginToSauceDemo("standard_user","secret_sauce");
         sauceDemo.assertDashboardDisplayed();
        
     }
